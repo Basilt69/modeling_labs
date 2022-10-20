@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+from st_aggrid import AgGrid
+
 # Cache dataframe so it's only loaded once
 @st.experimental_memo
 def load_data():
@@ -22,3 +24,10 @@ df = load_data()
 # Display the datdframe and allow the user to stretch the dataframe
 #accross the full width of the container, based on the chackbox value
 st.dataframe(df, use_container_width=st.session_state.use_container_width)
+
+def main():
+    st.markdown("### Lab 1 - Engineering of polynomial interpolation of tabular functions")
+    st.markdown("Purpose - Developing of skills in engineering og algorithms for interpolation of tabular functions by "
+                "the Newton "
+                "and Hermite polynomial")
+
