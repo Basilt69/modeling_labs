@@ -19,4 +19,5 @@ st.checkbox("Use container width", value=False, key="use_container_width")
 df = load_data()
 
 # Display the datdframe and allow the user to stretch the dataframe
-#
+#accross the full width of the container, based on the chackbox value
+st.dataframe(df, use_container_width=st.session_state.use_container_width)
