@@ -101,7 +101,7 @@ def main():
     })
 
 
-    st.subheader("Table of the function with N nodes:")
+    st.subheader("Таблица функции с количеством узлов N:")
     grid_return = AgGrid(
         df,
         editable=True,
