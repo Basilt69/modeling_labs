@@ -85,10 +85,10 @@ class NewtonInterpolationPolynomial(object):
 
 
 def main():
-    st.markdown("### Lab 1 - Engineering of polynomial interpolation of tabular functions")
-    st.markdown("Purpose - Developing of skills in engineering og algorithms for interpolation of tabular functions by "
-                "the Newton "
-                "and Hermite polynomial")
+    st.markdown("### Лабораторная работа 1.1 - Построение и программная реализация алгоритма полиномиальной "
+                "интерполяции табличных функций")
+    st.markdown("Цель работы - Получение навыков построения алгоритма интерполяции таблично заданных функций "
+                "полиномом Ньютона")
 
     x_arr = [0.00, 0.15, 0.30, 0.45, 0.60, 0.75, 0.90, 1.05]
     y_arr = [1.000000, 0.838771, 0.655336, 0.450447, 0.225336, -0.018310, -0.278390, -0.552430]

@@ -1,6 +1,6 @@
 import streamlit as st
 
-from lab_01 import lab1
+from lab_01 import lab1_1
 
 
 def header():
@@ -10,8 +10,8 @@ def header():
     '''
 
     st.header('МГТУ им. Баумана, Кафедра ИУ7')
-    st.markdown("**Курс:**Моделирование")
-    st.markdown("**Преподаватель:**Градов В.М.")
+    st.markdown("**Курс:** Моделирование")
+    st.markdown("**Преподаватель:** Градов В.М.")
     st.markdown("**Студент:** Ткаченко В.М.")
     st.sidebar.markdown(author)
 
@@ -26,7 +26,7 @@ def main():
     )
 
     if lab[:1] == "1":
-        lab1.main()
+        lab1_1.main()
 
 if __name__ == "__main__":
     main()
