@@ -1,0 +1,14 @@
+# Streamlit
+streamlit==1.13.0 #https://streamlit.io/
+streamlit-aggrid==0.3.3 #https://pypi.org/project/streamlit-aggrid/
+
+# data organisation and analysis
+pandas==1.5.1 #https://pypi.org/project/pandas/1.5.1/
+
+# math and statistic
+numpy==1.23.4 # https://numpy.org/
+scipy==1.9.3 #https://scipy.org
+
+# plots
+plotly==5.10.0 #https://pypi.org/project/plotly/
+matplotlib==3.6.1 #https://pypi.org/project/matplotlib/
