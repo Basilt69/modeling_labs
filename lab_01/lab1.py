@@ -111,9 +111,9 @@ def main():
     )
     arr = grid_return["data"].to_numpy()
 
-    c0, c1 = grid_return["data"].to_numpy()
+    #c0, c1 = grid_return["data"].to_numpy()
 
-    c0, c1 = st.columns(3)
+    c0, c1 = st.columns(2)
     n = c0.number_input("Введите степень полинома - n", min_value=0, max_value=7, value=3, step=1)
     x = c1.number_input("Введите значение аргумента - x", min_value=.0, max_value=1., value=.545, format="%.3f")
 
