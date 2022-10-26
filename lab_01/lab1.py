@@ -107,7 +107,7 @@ def main():
         editable=True,
         height=300,
         reload_data=False,
-        theme="bright",
+        theme="alpine",
     )
     arr = grid_return["data"].to_numpy()
 
