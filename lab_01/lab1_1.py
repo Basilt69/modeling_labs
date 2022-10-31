@@ -127,7 +127,7 @@ def main():
 
     ni_root = NewtonInterpolationPolynomial(np.fliplr(arr), int(n), 0)
     _, _, root = ni_root.calc()
-    st.write(f"Значение корня y(x) = {root:.5f}")
+    st.write(f"Значение корня y(x̄) = {root:.5f}")
 
     st.write("-----")
 
