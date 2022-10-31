@@ -58,7 +58,7 @@ class NewtonInterpolationPolynomial(object):
 
         for j in range(1,n):
             for i in range(n - j):
-                divided_diffs[i][j] = divided_diffs[i + 1][j - 1] - divided_diffs[i][j-1] / (x[i+j] - x[i])
+                divided_diffs[i][j] = (divided_diffs[i + 1][j - 1] - divided_diffs[i][j-1]) / (x[i+j] - x[i])
 
         return divided_diffs
 
