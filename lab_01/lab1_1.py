@@ -76,7 +76,7 @@ class NewtonInterpolationPolynomial(object):
         return p
 
     def calc(self):
-        '''Вычисление значения полинома Ньютона'''
+        '''Вычисление значения полинома Ньютона()'''
         selected_nodes = self.select_nodes(self)
         divided_diffs = self.calc_divided_diffs(self, selected_nodes)
         polynomial = self.find_polynomial(self, selected_nodes, divided_diffs)
