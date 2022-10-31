@@ -101,14 +101,14 @@ def main():
     })
 
 
-    st.subheader("Таблица функции с количеством узлов N:")
+    '''st.subheader("Таблица функции с количеством узлов N:")
     grid_return_1 = AgGrid(
         df[['x','y']],
         editable=True,
         height=300,
         reload_data=False,
         theme="alpine",
-    )
+    )'''
 
     grid_return_2 = AgGrid(
         df,
