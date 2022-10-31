@@ -103,7 +103,7 @@ def main():
 
     st.subheader("Таблица функции с количеством узлов N:")
     grid_return_1 = AgGrid(
-        df['x','y'],
+        df[['x','y']],
         editable=True,
         height=300,
         reload_data=False,
