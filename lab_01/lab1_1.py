@@ -102,14 +102,24 @@ def main():
 
 
     st.subheader("Таблица функции с количеством узлов N:")
-    grid_return = AgGrid(
+    grid_return_1 = AgGrid(
+        df['x','y'],
+        editable=True,
+        height=300,
+        reload_data=False,
+        theme="alpine",
+    )
+
+    grid_return_2 = AgGrid(
         df,
         editable=True,
         height=300,
         reload_data=False,
         theme="alpine",
     )
-    arr = grid_return["data"].to_numpy()
+
+    arr = grid_return_1["data"].to_numpy()
+    arr_2 = grid_return_2["data"].to_numpy()
 
     c0, c1 = st.columns(2)
     n = c0.number_input("Введите степень полинома - n", min_value=0, max_value=7, value=3, step=1)
@@ -125,7 +135,7 @@ def main():
 
     st.write("-----")
 
-    ni_root = NewtonInterpolationPolynomial(np.fliplr(arr['x','y']), int(n), 0)
+    ni_root = NewtonInterpolationPolynomial(np.fliplr(arr_2), int(n), 0)
     _, _, root = ni_root.calc()
     st.write(f"Значение корня y(x̄) = {root:.5f}")
 
