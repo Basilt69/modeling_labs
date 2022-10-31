@@ -124,13 +124,13 @@ def main():
     new_nodes, diffs, poly = ni.calc()
     st.subheader("Таблица значений разделенных разностей:")
     st.write(pd.DataFrame(diffs).replace(0, np.nan))
-    st.write(f"Значение полинома y(x) = {poly:.5f}")
+    st.write(f"Значение полинома Ньютона y(x) = {poly:.5f}")
 
     st.write("-----")
 
     ni_root = NewtonInterpolationPolynomial(np.fliplr(arr), int(n), 0)
     _, _, root = ni_root.calc()
-    st.write(f"Значение корня y(x̄) = {root:.5f}")
+    st.write(f"Значение корня с использованием полинома Ньютона(обратная интерполяция) y(x̄) = {root:.5f}")
 
     st.write("-----")
 
