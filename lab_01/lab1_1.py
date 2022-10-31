@@ -118,7 +118,7 @@ def main():
         theme="alpine",
     )
 
-    arr = grid_return_1["data"].to_numpy()
+    arr = grid_return_2["data"][['x','y']].to_numpy()
     arr_2 = grid_return_2["data"].to_numpy()
 
     c0, c1 = st.columns(2)
