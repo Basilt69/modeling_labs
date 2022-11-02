@@ -84,6 +84,56 @@ class NewtonInterpolationPolynomial(object):
         return selected_nodes, divided_diffs, polynomial
 
 
+
+class HermiteInterpolationPolynomial(NewtonInterpolationPolynomial):
+    '''
+    Класс(наследник) для интерполяции полинома Эрмита
+    ------
+    Принимаемые параметры:
+    nodes : список узлов
+    n : степень полинома
+    x : значение аргумента
+    '''
+
+    def __init__(self, nodes, n, x):
+        super().__init__(self,nodes, n, x)
+
+    @staticmethod
+    def calc_divided_diffs(self, nodes):
+        '''Расчёт значений разделенных разностей'''
+        n = self.range_
+        divided_diffs = np.zeros([n,n])
+        divided_diffs[:,0] = nodes[:,1]
+        x = nodes[:,0]
+
+        for j in range(1,n):
+            for i in range(n - j):
+                divided_diffs[i][j] = (divided_diffs[i + 1][j - 1] - divided_diffs[i][j-1]) / (x[i+j] - x[i])
+
+        return divided_diffs
+
+    @staticmethod
+    def find_polynomial(self, nodes, diffs):
+        '''Поиск полинома Ньютона при фиксированном x'''
+        x_data = nodes[:, 0]
+        coefficients = diffs[0]
+        n = self.n
+        p = coefficients[n]
+
+        for k in range(1, n+1):
+            p = coefficients[n-k] + (self.x - x_data[n-k]) * p
+
+        return p
+
+    def calc(self):
+        '''Вычисление значения полинома Ньютона()'''
+        selected_nodes = self.select_nodes(self)
+        divided_diffs = self.calc_divided_diffs(self, selected_nodes)
+        polynomial = self.find_polynomial(self, selected_nodes, divided_diffs)
+
+        return selected_nodes, divided_diffs, polynomial
+
+
 def main():
     st.markdown("### Лабораторная работа 1.1 - Построение и программная реализация алгоритма полиномиальной "
                 "интерполяции табличных функций")
@@ -113,6 +163,7 @@ def main():
 
     arr = grid_return_2["data"][['x','y']].to_numpy()
     arr_2 = grid_return_2["data"].to_numpy()
+    arr_3 = grid_return_2["data"][['x', "y'"]].to_numpy()
 
     c0, c1 = st.columns(2)
     n = c0.number_input("Введите степень полинома - n", min_value=0, max_value=7, value=3, step=1)
@@ -128,13 +179,21 @@ def main():
 
     st.write("-----")
 
+    he = HermiteInterpolationPolynomial(arr_3, int(n), x)
+    new_nodes_2, diffs_2, poly_2 = he.calc()
+    st.subheader("Таблица значений разделенных разностей(для полинома Эрмита):")
+    st.write(pd.DataFrame(diffs_2).replace(0, np.nan))
+    st.write(f"Значение полинома Эрмита y(x) = {poly_2:.5f}")
+
+    st.write("-----")
+
     ni_root = NewtonInterpolationPolynomial(np.fliplr(arr), int(n), 0)
     _, _, root = ni_root.calc()
     st.write(f"Значение корня с использованием полинома Ньютона(обратная интерполяция) y(x̄) = {root:.5f}")
 
     st.write("-----")
 
-    st.subheader("График функции:")
+    st.subheader("График функции(для полинома Ньютона):")
     plt.figure(figsize=(12,8))
     plt.plot(arr[:,0], arr[:,1], 'bo')
     plt.plot(new_nodes[:,0], new_nodes[:,1])
