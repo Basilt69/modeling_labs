@@ -85,7 +85,7 @@ class NewtonInterpolationPolynomial(object):
 
 
 
-class HermiteInterpolationPolynomial(NewtonInterpolationPolynomial):
+"""class HermiteInterpolationPolynomial(NewtonInterpolationPolynomial):
     '''
     Класс(наследник) для интерполяции полинома Эрмита
     ------
@@ -131,7 +131,7 @@ class HermiteInterpolationPolynomial(NewtonInterpolationPolynomial):
         divided_diffs = self.calc_divided_diffs(self, selected_nodes)
         polynomial = self.find_polynomial(self, selected_nodes, divided_diffs)
 
-        return selected_nodes, divided_diffs, polynomial
+        return selected_nodes, divided_diffs, polynomial"""
 
 
 def main():
@@ -179,12 +179,12 @@ def main():
 
     st.write("-----")
 
-    he = HermiteInterpolationPolynomial(arr_3, int(n), x)
+    '''he = HermiteInterpolationPolynomial(arr_3, int(n), x)
     new_nodes_2, diffs_2, poly_2 = he.calc()
     st.subheader("Таблица значений разделенных разностей(для полинома Эрмита):")
     st.write(pd.DataFrame(diffs_2).replace(0, np.nan))
     st.write(f"Значение полинома Эрмита y(x) = {poly_2:.5f}")
-
+'''
     st.write("-----")
 
     ni_root = NewtonInterpolationPolynomial(np.fliplr(arr), int(n), 0)
