@@ -65,6 +65,59 @@ def select_nodes_1():
     return divided_diffs
 
 
+def select_nodes_2():
+    # Выбор массива узлов для дальнейших вычислений
+    n = z + 3
+    divided_diffs = np.zeros([n, n])
+    if (x_arr[idx] - x_arr[idx + 1]) < (x_arr[idx] - x_arr[idx - 1]):
+        #idx_2 = idx + 1
+        divided_diffs[:, 0] = nodes[idx, 1]
+        divided_diffs[2:4, 0] = nodes[idx + 1, 1]
+        divided_diffs[4, 0] = nodes[idx + 2, 1]
+        divided_diffs[0,1] = y_div_arr[idx]
+        divided_diffs[2, 1] = y_div_arr[idx + 1]
+        divided_diffs[4, 1] = y_div_arr[idx + 2]
+        x = np.zeros(n)
+        x[:] = nodes[idx, 0]
+        x[2:4] = nodes[idx + 1, 0]
+        x[4:] = nodes[idx + 2, 0]
+        print("A")
+    elif (x_arr[idx] - x_arr[idx + 1]) > (x_arr[idx] - x_arr[idx - 1]):
+        #idx_2 = idx - 1
+        divided_diffs[:, 0] = nodes[idx-1, 1]
+        divided_diffs[2:4, 0] = nodes[idx, 1]
+        divided_diffs[4, 0] = nodes[idx + 1, 1]
+        divided_diffs[0, 1] = y_div_arr[idx-1]
+        divided_diffs[2, 1] = y_div_arr[idx]
+        divided_diffs[4, 1] = y_div_arr[idx + 1]
+        x = np.zeros(n)
+        x[:] = nodes[idx-1, 0]
+        x[2:4] = nodes[idx, 0]
+        x[4:] = nodes[idx + 1, 0]
+        print("B")
+    else:
+        #idx_2 = idx + 1
+        divided_diffs[:, 0] = nodes[idx, 1]
+        divided_diffs[2:4, 0] = nodes[idx + 1, 1]
+        divided_diffs[4, 0] = nodes[idx + 2, 1]
+        divided_diffs[0, 1] = y_div_arr[idx]
+        divided_diffs[2, 1] = y_div_arr[idx + 1]
+        divided_diffs[4, 1] = y_div_arr[idx + 2]
+        x = np.zeros(n)
+        x[:] = nodes[idx, 0]
+        x[2:4] = nodes[idx + 1, 0]
+        x[4:] = nodes[idx + 2, 0]
+        print("C")
+
+
+    print(divided_diffs)
+    print('X',x)
+
+    for j in range(1,n+1):
+        for i in range(1, n + 1, 2):
+            divided_diffs[i,j] = (divided_diffs[i-1][j-1] - divided_diffs[i-1][j-1]) / (x[j] - x[j-1])
+
+    print(divided_diffs)
 
 
 
@@ -72,11 +125,11 @@ def select_nodes_1():
 if z == 1:
     selected_nodes = select_nodes_1()
     print("This are selected nodes\n",selected_nodes)
-    #p =
-
-
+    p = y_arr[idx] + selected_nodes[0,1]*(x - x_arr[idx]) + selected_nodes[0,2]*(x - x_arr[idx])
+    print('This is p',p)
 elif z == 2:
-    #selected_nodes = select_nodes_2()
+    selected_nodes = select_nodes_2()
+    print("This are selected nodes\n", selected_nodes)
     print(2)
 elif z == 3:
     #selected_nodes = select_nodes_3()
