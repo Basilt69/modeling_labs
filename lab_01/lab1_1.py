@@ -91,7 +91,7 @@ class HermiteInterpolationPolynomial(NewtonInterpolationPolynomial):
     ------
     Принимаемые параметры:
     nodes : список узлов
-    n : степень полинома
+    z : количество улов, вводимое пользователем
     x : значение аргумента
     '''
 
@@ -99,39 +99,169 @@ class HermiteInterpolationPolynomial(NewtonInterpolationPolynomial):
         super().__init__(self,nodes, n, x)
 
     @staticmethod
-    def calc_divided_diffs(self, nodes):
-        '''Расчёт значений разделенных разностей'''
-        n = self.range_
-        divided_diffs = np.zeros([n,n])
-        divided_diffs[:,0] = nodes[:,1]
-        x = nodes[:,0]
+    def calc_divided_diffs_1(self, nodes):
+        # Расчёи значений разделенной разности
+        n = self.n + 2
+        idx = super.find_nearest()
+        divided_diffs = np.zeros([n, n])
+        divided_diffs[:, 0] = nodes[idx, 1]
+        divided_diffs[2, 0] = nodes[idx + 1, 1]
 
-        for j in range(1,n):
-            for i in range(n - j):
-                divided_diffs[i][j] = (divided_diffs[i + 1][j - 1] - divided_diffs[i][j-1]) / (x[i+j] - x[i])
+        divided_diffs[0, 1] = nodes[idx, 2]
+        x = np.zeros(n)
+        x[:] = nodes[idx, 0]
+        x[2] = nodes[idx + 1, 0]
+
+        divided_diffs[1][1] = (divided_diffs[2][0] - divided_diffs[1][0]) / (x[2] - x[0])
+        divided_diffs[0][2] = (divided_diffs[1][1] - divided_diffs[0][1]) / (x[2] - x[0])
 
         return divided_diffs
 
+
     @staticmethod
-    def find_polynomial(self, nodes, diffs):
-        '''Поиск полинома Ньютона при фиксированном x'''
-        x_data = nodes[:, 0]
-        coefficients = diffs[0]
-        n = self.n
-        p = coefficients[n]
+    def calc_divided_diffs_2(self, nodes):
+        # Расчёи значений разделенной разности
+        n = self.n + 3
+        idx = super.find_nearest()
+        divided_diffs = np.zeros([n, n + 1])
+        if (nodes[idx][0] - nodes[idx + 1][0]) < (nodes[idx][0] - nodes[idx - 1][0]):
+            divided_diffs[:, 0] = nodes[idx, 1]
+            divided_diffs[2:4, 0] = nodes[idx + 1, 1]
+            divided_diffs[4, 0] = nodes[idx + 2, 1]
+            divided_diffs[0, 1] = nodes[idx][2]
+            divided_diffs[2, 1] = nodes[idx + 1][2]
+            divided_diffs[4, 1] = nodes[idx + 2][2]
+            x = np.zeros(n + 1)
+            x[:] = nodes[idx, 0]
+            x[2:4] = nodes[idx + 1, 0]
+            x[4:] = nodes[idx + 2, 0]
+            #print("A")
+        elif (nodes[idx][0] - nodes[idx + 1][0]) > (nodes[idx][0] - nodes[idx - 1][0]):
+            divided_diffs[:, 0] = nodes[idx - 1, 1]
+            divided_diffs[2:4, 0] = nodes[idx, 1]
+            divided_diffs[4, 0] = nodes[idx + 1, 1]
+            divided_diffs[0, 1] = nodes[idx - 1][2]
+            divided_diffs[2, 1] = nodes[idx][2]
+            divided_diffs[4, 1] = nodes[idx + 1][2]
+            x = np.zeros(n + 1)
+            x[:] = nodes[idx - 1, 0]
+            x[2:4] = nodes[idx, 0]
+            x[4:] = nodes[idx + 1, 0]
+            #print("B")
+        else:
+            divided_diffs[:, 0] = nodes[idx, 1]
+            divided_diffs[2:4, 0] = nodes[idx + 1, 1]
+            divided_diffs[4, 0] = nodes[idx + 2, 1]
+            divided_diffs[0, 1] = nodes[idx][2]
+            divided_diffs[2, 1] = nodes[idx + 1][2]
+            divided_diffs[4, 1] = nodes[idx + 2][2]
+            x = np.zeros(n + 1)
+            x[:] = nodes[idx, 0]
+            x[2:4] = nodes[idx + 1, 0]
+            x[4:] = nodes[idx + 2, 0]
+            #print("C")
 
-        for k in range(1, n+1):
-            p = coefficients[n-k] + (self.x - x_data[n-k]) * p
+        for j in range(1, 2):
+            # i - строка
+            # j - колонка
+            for i in range(1, n - 1, 2):
+                divided_diffs[i, j] = (divided_diffs[i + 1][j - 1] - divided_diffs[i][j - 1]) / (x[j + 1] - x[j - 1])
 
-        return p
+        for j in range(1, n):
+            # i - строка
+            # j - колонка
+            for i in range(n - j):
+                divided_diffs[i, j + 1] = (divided_diffs[i + 1][j] - divided_diffs[i][j]) / (x[j + 1] - x[0])
+
+        return divided_diffs, x
+
+
+    @staticmethod
+    def calc_divided_diffs_3(self, nodes):
+        # Расчёи значений разделенной разности
+        n = self.n + 4
+        idx = super.find_nearest()
+        divided_diffs = np.zeros([n + 1, n + 1])
+        divided_diffs[:, 0] = nodes[idx, 1]
+        divided_diffs[2:4, 0] = nodes[idx + 1, 1]
+        divided_diffs[4:, 0] = nodes[idx + 2, 1]
+        divided_diffs[6, 0] = nodes[idx + 3, 1]
+        divided_diffs[0, 1] = nodes[idx][2]
+        divided_diffs[2, 1] = nodes[idx + 1][2]
+        divided_diffs[4, 1] = nodes[idx + 2][2]
+        divided_diffs[6, 1] = nodes[idx + 3][2]
+
+        x = np.zeros(n + 1)
+        x[:] = nodes[idx, 0]
+        x[2:4] = nodes[idx + 1, 0]
+        x[4:6] = nodes[idx + 2, 0]
+        x[6:] = nodes[idx + 3, 0]
+
+        print('X', x)
+
+        for j in range(1, 2):
+            # i - строка
+            # j - колонка
+            for i in range(1, n, 2):
+                divided_diffs[i, j] = (divided_diffs[i + 1][j - 1] - divided_diffs[i][j - 1]) / (x[i + 1] - x[i - 1])
+
+        for j in range(1, n):
+            # i - строка
+            # j - колонка
+            for i in range(n - j):
+                divided_diffs[i, j + 1] = (divided_diffs[i + 1][j] - divided_diffs[i][j]) / (x[j + 1] - x[0])
+
+        print(divided_diffs)
+        return divided_diffs, x
+
+
 
     def calc(self):
-        '''Вычисление значения полинома Ньютона()'''
-        selected_nodes = self.select_nodes(self)
-        divided_diffs = self.calc_divided_diffs(self, selected_nodes)
-        polynomial = self.find_polynomial(self, selected_nodes, divided_diffs)
+        '''Вычисление значения полинома Эрмита'''
+        if self.n == 1:
+            selected_nodes = self.calc_divided_diffs_1()
+            idx = super.find_nearest()
+            polynomial = self.nodes[idx][1] + selected_nodes[0, 1] * (self.x - self.nodes[idx][0]) + selected_nodes[0,
+                                                                                                      2] * (self.x -
+                                                                                                            self.nodes[idx][0])
+            return selected_nodes, polynomial
+        elif self.n == 2:
+            selected_nodes, values = self.calc_divided_diffs_2()
+            idx = super.find_nearest()
+            polynomial = self.nodes[idx][1] + \
+                selected_nodes[0, 1] * (self.x - values[0]) + \
+                selected_nodes[0, 2] * ((self.x - values[0]) * (self.x - values[0])) + \
+                selected_nodes[0, 3] * ((self.x - values[0]) * (self.x - values[0])) * (self.x - values[2]) + \
+                selected_nodes[0, 4] * ((self.x - values[0]) * (self.x - values[0])) * ((self.x - values[2]) * (
+                    self.x - values[2])) + \
+                selected_nodes[0, 5] * ((self.x - values[0]) * (self.x - values[0])) * ((self.x - values[2]) * (
+                    self.x - values[2])) * (
+                            self.x - values[4])
+            return selected_nodes, polynomial
+        elif self.n == 3:
+            selected_nodes, values = self.calc_divided_diffs_3()
+            idx = super.find_nearest()
+            polynomial = self.nodes[idx][1] + \
+                selected_nodes[0, 1] * (self.x - values[0]) + \
+                selected_nodes[0, 2] * ((self.x - values[0]) * (self.x - values[0])) + \
+                selected_nodes[0, 3] * ((self.x - values[0]) * (self.x - values[0])) * (self.x - values[2]) + \
+                selected_nodes[0, 4] * ((self.x - values[0]) * (self.x - values[0])) * ((self.x - values[2]) * (
+                    self.x - values[2]))\
+                         + \
+                selected_nodes[0, 5] * ((self.x - values[0]) * (self.x - values[0])) * ((self.x - values[2]) * (
+                    self.x - values[2]))\
+                         * (
+                            self.x - values[4]) + \
+                selected_nodes[0, 6] * ((self.x - values[0]) * (self.x - values[0])) * ((self.x - values[2]) * (
+                    self.x - values[
+                2])) * (
+                            (self.x - values[4]) * (self.x - values[4])) + \
+                selected_nodes[0, 7] * ((self.x - values[0]) * (self.x - values[0])) * ((self.x - values[2]) * (
+                    self.x - values[
+                2])) * (
+                            (self.x - values[4]) * (self.x - values[4])) * (self.x - values[6])
 
-        return selected_nodes, divided_diffs, polynomial
+        return selected_nodes, polynomial
 
 
 def main():
@@ -181,7 +311,8 @@ def main():
     st.write("-----")
 
     he = HermiteInterpolationPolynomial(arr_3, int(z), x)
-    new_nodes_2, diffs_2, poly_2 = he.calc()
+    #new_nodes_2, diffs_2, poly_2 = he.calc()
+    diffs_2, poly_2 = he.calc()
     st.subheader("Таблица значений разделенных разностей(для полинома Эрмита):")
     st.write(pd.DataFrame(diffs_2).replace(0, np.nan))
     st.write(f"Значение полинома Эрмита y(x) = {poly_2:.5f}")
