@@ -219,14 +219,14 @@ class HermiteInterpolationPolynomial(NewtonInterpolationPolynomial):
     def calc(self):
         '''Вычисление значения полинома Эрмита'''
         if self.n == 1:
-            selected_nodes = self.calc_divided_diffs_1()
+            selected_nodes = self.calc_divided_diffs_1(self, self.nodes)
             idx = super.find_nearest()
             polynomial = self.nodes[idx][1] + selected_nodes[0, 1] * (self.x - self.nodes[idx][0]) + selected_nodes[0,
                                                                                                       2] * (self.x -
                                                                                                             self.nodes[idx][0])
             return selected_nodes, polynomial
         elif self.n == 2:
-            selected_nodes, values = self.calc_divided_diffs_2()
+            selected_nodes, values = self.calc_divided_diffs_2(self, self.nodes)
             idx = super.find_nearest()
             polynomial = self.nodes[idx][1] + \
                 selected_nodes[0, 1] * (self.x - values[0]) + \
@@ -239,7 +239,7 @@ class HermiteInterpolationPolynomial(NewtonInterpolationPolynomial):
                             self.x - values[4])
             return selected_nodes, polynomial
         elif self.n == 3:
-            selected_nodes, values = self.calc_divided_diffs_3()
+            selected_nodes, values = self.calc_divided_diffs_3(self, self.nodes)
             idx = super.find_nearest()
             polynomial = self.nodes[idx][1] + \
                 selected_nodes[0, 1] * (self.x - values[0]) + \
