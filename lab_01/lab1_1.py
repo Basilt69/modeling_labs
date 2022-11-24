@@ -96,7 +96,7 @@ class HermiteInterpolationPolynomial(NewtonInterpolationPolynomial):
     '''
 
     def __init__(self, nodes, n, x):
-        super().__init__(self,nodes, n, x)
+        super().__init__(nodes, n, x)
 
     @staticmethod
     def calc_divided_diffs_1(self, nodes):

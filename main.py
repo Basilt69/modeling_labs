@@ -3,6 +3,9 @@ import streamlit as st
 from lab_01 import lab1_1
 
 
+# st.set_page_config(initial_sidebar_state="collapsed")
+st.sidebar.image('logo.png', width=300)
+
 def header():
     author = '''
     made by [Basil Tkachenko](https://github.com/Basilt69)
