@@ -216,7 +216,7 @@ class HermiteInterpolationPolynomial(NewtonInterpolationPolynomial):
 
 
 
-    def calc(self):
+    def calc(self, nodes):
         '''Вычисление значения полинома Эрмита'''
         if self.n == 1:
             selected_nodes = self.calc_divided_diffs_1(self, self.nodes)
