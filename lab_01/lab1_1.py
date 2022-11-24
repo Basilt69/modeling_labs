@@ -312,7 +312,7 @@ def main():
 
     he = HermiteInterpolationPolynomial(arr_3, int(z), x)
     #new_nodes_2, diffs_2, poly_2 = he.calc()
-    diffs_2, poly_2 = he.calc()
+    diffs_2, poly_2 = he.calc(arr_3)
     st.subheader("Таблица значений разделенных разностей(для полинома Эрмита):")
     st.write(pd.DataFrame(diffs_2).replace(0, np.nan))
     st.write(f"Значение полинома Эрмита y(x) = {poly_2:.5f}")
