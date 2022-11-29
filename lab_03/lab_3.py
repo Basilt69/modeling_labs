@@ -75,3 +75,68 @@ def integrate_function(t: float, n: int, m: int) -> float:
     return 4 / np.pi *function_integrator(f, 0, np.pi * .5, 0, np.pi * .5, n, m)
 
 
+def plot(func: Callable, n: int, m: int, test: bool = False, test_func: Callable = None, test_func2: Callable = None):
+    '''отрисовка графика'''
+    st.markdown("---")
+    x = np.arrange(.05, 10, .001) if not test else np.arrange(-10, 10, .001)
+    y = [func(t, n, m) for t in x] if not test else test_func2(x) - test_func2(0 * x)
+
+    fig = go.figure()
+    fig.add_trace(go.Scatter(
+        x=x,
+        y=y,
+        mode='lines',
+    ))
+
+    if test:
+        def test_y(n_test):
+            return [func(test_func, 0, x_test, n_test) for x_test in x]
+
+        fig.update_layout(
+            title=f"График зависимости ε(τ)" if not test else "График тестирования",
+            xaxis_title="τ" if not test else "",
+            yaxis_title="ε" if not test else "",
+            showlegend=False
+        )
+
+        st.write(fig)
+        st.markdown("---")
+
+
+def test_function(func: Callable):
+    def test_f(x):
+        return .3 * (x - 1) ** 2 - .1 * (x + 4) ** 2 - x
+
+    def act_int_f(x):
+        return .1 * (x - 1) ** 3 - .1 / 3 * (x + 4) ** 3 - .5 * x ** 2
+
+    plot(func, 0, 0, test=True, test_func=test_f, test_func2=act_int_f)
+
+
+def main():
+    st.markdown("### Лабораторная работа №3")
+    st.markdown("**Тема:** Построение и программная реализация алгоритмов численного интегрирования.")
+    st.markdown("""**Цель работы:** Получение навыков построения алгоритма вычисления двукратного 
+        интеграла с использованием квадратурных формул Гаусса и Симпсона.""")
+
+    st.write("---")
+
+    c0, c1, c2 = st.columns(3)
+    tau = c0.number_input("Введите значение параметра τ:", min_value=.0, max_value=1., value=.808, format="%.3f")
+    N = c1.number_input("Введите значение N:", min_value=1, max_value=100, value=4, step=1)
+    M = c2.number_input("Введите значение M:", min_value=1, max_value=100, value=5, step=1)
+
+    result = integrate_function(tau, N, M)
+    st.write(f"Результат интегрирования: {round(result, 5)}")
+
+    plot(integrate_function, N, M)
+
+    test = st.selectbox("Выберите метод тестирования", ("Гаусс", "Симпсон"))
+    if test == "Симпсон":
+        test_function(simpson_integrate)
+    elif test == "Гаусс":
+        test_function(gauss_integrate)
+
+
+if __name__ == "__main__":
+    main()
