@@ -1,6 +1,7 @@
 import streamlit as st
 
 from lab_01 import lab1_1
+from lab_03 import lab_3
 
 
 # st.set_page_config(initial_sidebar_state="collapsed")
@@ -24,12 +25,16 @@ def main():
         "Выберите лабораторную работу:", (
             "1. Полиномиальная интерполяция табличных функций(Полином Ньютона).",
             "2. Алгоритм наилучшего среднеквадратичного приближения.",
+            "3. Численное интегрирование."
         ),
-        index=0
+        index=2
     )
 
     if lab[:1] == "1":
         lab1_1.main()
+
+    elif lab[:1] == "3":
+        lab_3.main()
 
 if __name__ == "__main__":
     main()
