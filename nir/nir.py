@@ -23,5 +23,11 @@ def equaition_2(x):
     return 1 / (3 * np.cos(x) + 2)
 
 
+def equation_e(x):
+    '''f(x) = x * e^(-x)'''
+    return x * np.e ** -x
 
+
+def equation_3(x, y):
+    '''f(x, y) = 4 + 2y + 2x + xy + x³y'''
 
