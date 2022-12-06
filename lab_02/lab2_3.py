@@ -32,6 +32,12 @@ def main():
         theme="alpine",
     )
 
+    result = pd.DataFrame(data=df).applymap("{0:.4f}".format)
+
+    st.table(result.assign(hack="").set_index("hack"))
+
+
+
 
 
 
