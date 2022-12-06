@@ -1,6 +1,7 @@
 import streamlit as st
 
 from lab_01 import lab1_1
+from lab_02 import lab2_3
 from lab_03 import lab_3
 from lab_04 import lab_4
 
@@ -34,6 +35,9 @@ def main():
 
     if lab[:1] == "1":
         lab1_1.main()
+
+    elif lab[:1] == "2":
+        lab2_3.main()
 
     elif lab[:1] == "3":
         lab_3.main()
