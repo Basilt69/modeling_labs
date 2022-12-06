@@ -13,6 +13,9 @@ b = 2 # теоретическое значение параметра b
 f = np.array([k*z+b for z in range(N)])
 y = f + np.random.normal(0, sigma, N)
 
+print(f)
+print(y)
+
 x = np.array(range(N))
 
 mx = x.sum()/N
