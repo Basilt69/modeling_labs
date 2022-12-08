@@ -30,4 +30,36 @@ def equation_e(x):
 
 def equation_3(x, y):
     '''f(x, y) = 4 + 2y + 2x + xy + x³y'''
+    return 4 + 2 * y + 2 * x + x * y + x ** 3 * y
+
+
+def equation_3_2(xa, ya, a, b, c, d):
+    x = (b - a) * xa + a
+    y = (d - c) * ya + c
+    return 4 + 2 * y + 2 * x + x * y + x ** 3 * y
+
+
+def equation_4(x, y):
+    '''f(x,y) = y²/x²'''
+    return y ** 2 / x ** 2
+
+
+def equation_4_2(xa, ya, a, b, c, d):
+    x = (b - a) * xa + a
+    y = (d - c) * ya + c
+    return y ** 2 / x ** 2
+
+
+def equation_5(x, y):
+    '''f(x,y) = sqrt(x * x + y * y) + 3 * cos(sqrt(x * x + y * y)) + 5'''
+    return np.sqrt(x * x + y * y) + 3 * np.cos(np.sqrt(x*x + y*y)) + 5
+
+
+def equation_5_2(xa, ya, a, b, c, d):
+    x = (b - a) * xa + a
+    y = (d - c) * ya + c
+    return np.sqrt(x * x + y * y) + 3 * np.cos(np.sqrt(x * x + y * y)) + 5
+
+
+
 
