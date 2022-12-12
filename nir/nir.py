@@ -106,6 +106,26 @@ def calculate_integral(a, b, num_samples, num_iter, func):
     return areas, avg_integral
 
 
+def plot_func(func, a, b, integral):
+    st.write(f"Геометрическая интерпретация для $a={a}$, $b={b}$:")
+    x = np.linspace(a, b)
+    y = func(x)
+
+    # график функции
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.set_ylabel("f(x)")
+    ax.set_xlabels("x")
+    ax.grid(True)
+    ax.axhline(y=0, color="k", linewidth=0.5)
+
+    ax.plot(x, y, "r", linewidth=1)
+
+
+
+
+
+
+
 
 
 
