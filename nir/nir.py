@@ -18,7 +18,7 @@ def equation_1(x):
     return 3 + 2 * x - 3 * x ** 2 + x ** 3
 
 
-def equaition_2(x):
+def equation_2(x):
     '''f(x) = 1 / (3cos(x) + 2)'''
     return 1 / (3 * np.cos(x) + 2)
 
