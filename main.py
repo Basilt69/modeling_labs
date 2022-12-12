@@ -4,6 +4,7 @@ from lab_01 import lab1_1
 from lab_02 import lab2_3
 from lab_03 import lab_3
 from lab_04 import lab_4
+from nir import nir
 
 
 # st.set_page_config(initial_sidebar_state="collapsed")
@@ -29,8 +30,9 @@ def main():
             "2. Алгоритм наилучшего среднеквадратичного приближения.",
             "3. Численное интегрирование.",
             "4. Численное дифференцирование.",
+            "5. Метод Монте-Карло"
         ),
-        index=3
+        index=4
     )
 
     if lab[:1] == "1":
@@ -44,6 +46,9 @@ def main():
 
     elif lab[:1] == "4":
         lab_4.main()
+
+    elif lab[:1] == "5":
+        nir.main()
 
 if __name__ == "__main__":
     main()
