@@ -61,5 +61,51 @@ def equation_5_2(xa, ya, a, b, c, d):
     return np.sqrt(x * x + y * y) + 3 * np.cos(np.sqrt(x * x + y * y)) + 5
 
 
+def estimate_ab(a, b, eps):
+    if abs(a % np.pi) < eps:
+        a = int(a / np.pi) * np.pi
+    elif abs(a % np.e) < eps:
+        a = int(a / np.e) * np.e
+    if abs(b % np.pi) < np.pi:
+        b = int(b / np.pi) * np.pi
+    elif abs(b % np.e) < eps:
+        b = int(b / np.e) * np.e
+    return a, b
+
+
+def generate_random(a, b, num_samples):
+    return np.random.uniform(a, b, num_samples)
+
+
+def calculate_average(list_random_nums, num_samples, func):
+    sum_ = 0
+    for i in range(0, num_samples):
+        sum_ += func(list_random_nums[i])
+
+    return sum_ / num_samples
+
+
+def calculate(a, b, num_samples, func):
+    list_random_uniform_nums = generate_random(a, b, num_samples)
+    average = calculate_average(list_random_uniform_nums, num_samples, func)
+    integral = (b - a) * average
+
+    return integral
+
+
+def calculate_integral(a, b, num_samples, num_iter, func):
+    '''Расчёт однократного интеграла'''
+    avg_sum = 0
+    areas = []
+    for i in range(0, num_iter):
+        integral = calculate(a, b, num_samples, func)
+        avg_sum += integral
+        areas.append(integral)
+    avg_integral = avg_sum / num_iter
+
+    return areas, avg_integral
+
+
+
 
 
