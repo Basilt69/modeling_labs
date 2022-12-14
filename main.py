@@ -38,7 +38,7 @@ def main():
     if lab[:1] == "1":
         lab1_1.main()
 
-    elif lab[:1] == "2":
+    '''elif lab[:1] == "2":
         lab2_3.main()
 
     elif lab[:1] == "3":
@@ -48,7 +48,7 @@ def main():
         lab_4.main()
 
     elif lab[:1] == "5":
-        nir.main()
+        nir.main()'''
 
 if __name__ == "__main__":
     main()
